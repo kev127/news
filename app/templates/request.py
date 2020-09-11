@@ -28,6 +28,24 @@ def get_news(category):
 
     return news_results
 
+def get_news(id):
+    get_news_details_url = base_url.format(id,api_key)
+
+    with urllib.request.urlopen(get_news_details_url) as url:
+        news_details_data = url.read()
+        news_details_response = json.loads(news_details_data)
+
+        news_object = None
+        if news_details_response:
+            id = news_details_response.get('id')
+            title = news_details_response.get('original_title')
+            description = news_details_response.get('description')
+
+            news_object = News(id,title,overview)
+
+    return movie_object    
+    
+
 def process_news(news_list):
     '''
         Function that processes the news results and turns them into a list of objects
@@ -42,14 +60,14 @@ def process_news(news_list):
 
     for news_item in news_list:
         id = news_item.get('id')
-        name = news_item.get('name')
+        title = news_item.get('title')
         description = news_item.get('description')
         url = news_item.get('url')
         category = news_item.get('category')
         language = news_item.get('language')
         country = news_item.get('country')
 
-        news_object = news(id,name,description,url,category,country,language)
+        news_object = news(id,title,description,url,category,country,language)
         news_results.append(news_object)
 
     return news_results    
