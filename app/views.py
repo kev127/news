@@ -9,7 +9,6 @@ def index():
     View root page function that returns the index page and its data
     '''
     business_news = get_news('business')
-	sports_news = get_news('sports')
 	technology_news = get_news('technology')
 	entertainment_news = get_news('entertainment')
     title = 'Home - Welcome To Prime News'
